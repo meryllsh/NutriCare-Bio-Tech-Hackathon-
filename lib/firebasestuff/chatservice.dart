@@ -4,7 +4,7 @@ import 'package:nutricare/models/chatmessagemodel.dart';
 class ChatService {
   final _chatCollection = FirebaseFirestore.instance.collection('chats');
 
-  Future<void> sendMessage(String text, String senderId, String username) async {
+  Future<void> sendMessage(String text, String senderId, String username,String photoUrl) async {
     try {
       final message = ChatMessage(
         messageId: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -12,6 +12,7 @@ class ChatService {
         text: text,
         timestamp: DateTime.now(),
         username: username,
+        photoUrl: photoUrl,
       );
       await _chatCollection.add(message.toJson());
     } catch (e) {

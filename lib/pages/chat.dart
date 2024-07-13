@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nutricare/firebasestuff/authentication.dart';
 import 'package:nutricare/firebasestuff/chatservice.dart';
 import 'package:nutricare/models/chatmessagemodel.dart';
+import 'package:nutricare/randomutilities/buildmessageitemtyGPT.dart';
 
 class Chat extends StatefulWidget {
   @override
@@ -11,6 +12,20 @@ class Chat extends StatefulWidget {
 class _ChatState extends State<Chat> {
   final TextEditingController _controller = TextEditingController();
   final ChatService _chatService = ChatService();
+  String currentUserUsername = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _initUserDetails();
+  }
+
+  void _initUserDetails() async {
+    final userDetails = await Authentication().getUserDetails();
+    setState(() {
+      currentUserUsername = userDetails.username; // Set username once available
+    });
+  }
 
   void _sendMessage() async {
     final text = _controller.text;
@@ -18,27 +33,29 @@ class _ChatState extends State<Chat> {
       final userDetails = await Authentication().getUserDetails();
       final username = userDetails.username;
       final senderId = userDetails.uid;
-
-      await _chatService.sendMessage(text, senderId, username);
+      final photoUrl = userDetails.photoUrl;
+      await _chatService.sendMessage(text, senderId, username,photoUrl);
       _controller.clear();
     }
   }
 
-  Widget _buildMessageItem(ChatMessage message) {
-    return ListTile(
-      leading: CircleAvatar(
-        child: Text(message.username.isNotEmpty ? message.username[0] : 'U'),
-        backgroundColor: Colors.grey,
-      ),
-      title: Text(message.text),
-      subtitle: Text('Sent by: ${message.username}'),
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Chat Room')),
+        backgroundColor: Colors.white,
+      appBar: AppBar(title: Text('Chat',
+        style: TextStyle(
+          color: Color(0xFF2abca4),
+
+        )),
+        centerTitle: true,
+        elevation: 0.0,
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
+
+      ),
       body: Column(
         children: [
           Expanded(
@@ -57,7 +74,7 @@ class _ChatState extends State<Chat> {
                   reverse: true,
                   itemBuilder: (context, index) {
                     final message = messages[index];
-                    return _buildMessageItem(message);
+                    return buildMessageItem(messages[index], currentUserUsername);
                   },
                 );
               },

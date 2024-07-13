@@ -44,7 +44,7 @@ class _PageManagerState extends State<PageManager> {
           // This is where you set the background color of the BottomNavigationBar.
           // It overrides the default or theme's canvasColor for the BottomNavigationBar.
           //This is necessary to do for some reason as when you use backgroundColor it wont swap >)
-          canvasColor: Colors.green[400],
+          canvasColor: Color(0xFF2abca4),
         ),
       child: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

@@ -76,6 +76,8 @@ class _SignupState extends State<Signup> {
     setState(() {
       _isLoading = true;
     });
+    Navigator.pushNamed(context, '/Loading');
+
     String res = await Authentication().signUpUser(
       email: _emailController.text,
       password: _passwordController.text,
@@ -83,6 +85,8 @@ class _SignupState extends State<Signup> {
       age: int.parse(_ageController.text),
       file: _image!,
     );
+
+    Navigator.pop(context);
 
     setState(() {
       _isLoading = false;
@@ -92,7 +96,6 @@ class _SignupState extends State<Signup> {
       showSnackBar(res, context);
     } else {
       Navigator.pushReplacementNamed(context, '/Home');
-
     }
   }
 
@@ -171,14 +174,18 @@ class _SignupState extends State<Signup> {
                               Radius.circular(4),
                             ),
                           ),
-                          color: Colors.blue),
+                          color: Color(0xFF2abca4)),
                       child: _isLoading
                           ? const Center(
                         child: CircularProgressIndicator(
                           color: Colors.white,
                         ),
                       )
-                          : const Text('Sign up'),
+                          : const Text('Sign up',
+                      style:TextStyle(
+                        color:Colors.white,
+                          fontWeight: FontWeight.bold
+                      )),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -190,18 +197,29 @@ class _SignupState extends State<Signup> {
                     children: [
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: const Text("Don't have an account?"),
+                        child: const Text("Have an account?"),
                       ),
-                      GestureDetector(
+                      SizedBox(width: 20),
+                      InkWell(
                         onTap: navigateToLogin,
                         child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: const Text("Login.",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              )),
+                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Adjust padding as needed
+                          decoration: BoxDecoration(
+                            color: Color(0xFF2abca4), // Background color of the button
+                            borderRadius: BorderRadius.circular(5), // Rounded corners
+                            // Add more decoration properties as needed
+                          ),
+                          child: Text(
+                            "Login.",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white, // Text color
+                              // Add more text style properties as needed
+                            ),
+                          ),
                         ),
-                      )
+                      ),
+                      SizedBox(height: 50,)
                     ],
                   )
                 ],

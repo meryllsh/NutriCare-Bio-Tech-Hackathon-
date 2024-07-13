@@ -29,18 +29,24 @@ class _LoginState extends State<Login> {
     setState(() {
       _isLoading = true;
     });
+    Navigator.pushNamed(context, '/Loading');
+
     String res = await Authentication().loginUser(
       email: _emailController.text,
       password: _passwordController.text,
     );
-    if (res == 'success') {
-      Navigator.pushReplacementNamed(context, '/Home');
-    } else {
-      showSnackBar(res, context);
-    }
+
+    Navigator.pop(context);
+
     setState(() {
       _isLoading = false;
     });
+
+    if (res != 'success') {
+      showSnackBar(res, context);
+    } else {
+      Navigator.pushReplacementNamed(context, '/Home');
+    }
   }
 
   void navigateToSignup() {
@@ -50,18 +56,35 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+
+      body:
+
+      Stack(
+          children: [
+            Image.asset('assets/nutricareicon.png'),
+
+      Container(
+      decoration: BoxDecoration(
+      image: DecorationImage(
+          image: NetworkImage(""), // background image
+      fit: BoxFit.cover,
+    ),
+    ),
+    ),
+
+
+      SafeArea(
           child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Flexible(child: Container(), flex: 2),
+                  Flexible(child: Container(), flex: 5),
                   //image
-                  SvgPicture.asset('assets/starrytransmission.svg',
-                      height: 145),
-                  const SizedBox(height: 64),
+                  // Image.asset('assets/opensourceavengers.png',
+                  //     height: 200),
+                  const SizedBox(height: 200),
                   //text field input for email
                   TextFieldInput(
                       textEditingController: _emailController,
@@ -88,13 +111,19 @@ class _LoginState extends State<Login> {
                               Radius.circular(4),
                             ),
                           ),
-                          color: Colors.blue),
+                          color: Color(0xFF2abca4)),
                       child: _isLoading
                           ? const Center(
                           child: CircularProgressIndicator(
                             color: Colors.white,
                           ))
-                          : const Text('Log in'),
+                          : const Text('Log in',
+                      style:TextStyle(
+                        color:Colors.white,
+                          fontWeight: FontWeight.bold,
+
+                      )),
+
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -104,24 +133,44 @@ class _LoginState extends State<Login> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: const Text("Don't have an account?"),
-                      ),
-                      GestureDetector(
-                        onTap: navigateToSignup,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: const Text("Sign up.",
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: const Text(
+                              "Don't have an account?",
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
-                      )
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height:10),
+                          InkWell(
+                            onTap: navigateToSignup,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Adjust padding as needed
+                              decoration: BoxDecoration(
+                                color: Color(0xFF2abca4), // Background color of the button
+                                borderRadius: BorderRadius.circular(5), // Rounded corners
+                                // Add more decoration properties as needed
+                              ),
+                              child: const Text(
+                                "Sign up.",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white, // Text color
+                                  // Add more text style properties as needed
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 40,), // Adjust the space below the button as needed
+                        ],
+                      ),
                     ],
                   )
                 ],
               ))),
-    );
+      ]),);
   }
 }

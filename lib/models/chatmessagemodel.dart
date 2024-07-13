@@ -6,6 +6,7 @@ class ChatMessage {
   String text;
   DateTime timestamp;
   String username;
+  String photoUrl;
 
   ChatMessage({
     required this.messageId,
@@ -13,6 +14,7 @@ class ChatMessage {
     required this.text,
     required this.timestamp,
     required this.username,
+    required this.photoUrl,
   });
 
   Map<String, dynamic> toJson() => {
@@ -21,6 +23,7 @@ class ChatMessage {
     'text': text,
     'timestamp': timestamp,
     'username': username,
+    'photoUrl':photoUrl,
   };
 
   static ChatMessage fromJson(Map<String, dynamic> json) => ChatMessage(
@@ -29,5 +32,6 @@ class ChatMessage {
     text: json['text'],
     timestamp: (json['timestamp'] as Timestamp).toDate(),
     username: json['username'],
+    photoUrl: json['photoUrl'],
   );
 }

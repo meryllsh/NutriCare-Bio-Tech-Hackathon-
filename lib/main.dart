@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:nutricare/AI%20Stuff/camerastream.dart';
 import 'package:nutricare/AI%20Stuff/imagefoodclassification.dart';
 import 'package:nutricare/pages/chat.dart';
 import 'package:nutricare/pages/daily_tips.dart';
@@ -27,7 +28,7 @@ void main() async {
   runApp(MaterialApp(
 
 
-      initialRoute: '/Testing',
+      initialRoute: '/Welcome',
 
 
       routes: {
@@ -40,7 +41,8 @@ void main() async {
     '/UserAccount': (context) => managePage('/UserAccount'),
     '/Loading': (context) => LoadingScreen(),
         '/Welcome': (context) => WelcomeScreen(),
-        '/Testing': (context) => FoodClassification(),
+        '/TestingTEST': (context) => FoodClassification(),
+        '/CameraTEST': (context) => CameraStream(),
   }));
 }
 

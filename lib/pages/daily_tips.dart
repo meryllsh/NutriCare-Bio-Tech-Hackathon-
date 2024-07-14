@@ -1,33 +1,17 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:nutricare/widgets/emoticon.dart';
+import 'package:nutricare/widgets/exercise.dart';
 
-void main() {
-  runApp(const MyApp());
-}
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class DailyTips extends StatefulWidget {
+  const DailyTips({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<DailyTips> createState() => _DailyTipsState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _DailyTipsState extends State<DailyTips> {
   String selectedEmotion = '';
   String selectedExercise = '';
 

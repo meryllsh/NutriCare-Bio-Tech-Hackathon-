@@ -46,23 +46,25 @@ class _UserAccountState extends State<UserAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Image.asset('assets/nutricaretitle.png'),
+        centerTitle: true,
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Image.asset('assets/nutricaretitle.png'),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0.0,
-          automaticallyImplyLeading: false,
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await Authentication().signOut();
-            Navigator.of(context).pushReplacementNamed('/Login');
-          },
-          child: Icon(Icons.logout, color: Colors.white),
-          backgroundColor: Color(0xFF2abca4),
-        ),
-        body: Padding(
+        elevation: 0.0,
+        automaticallyImplyLeading: false,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await Authentication().signOut();
+          Navigator.of(context).pushReplacementNamed('/Login');
+        },
+        child: Icon(Icons.logout, color: Colors.white),
+        backgroundColor: Color(0xFF2abca4),
+      ),
+      body: Stack(
+        children: [
+          Padding(
             padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -182,40 +184,40 @@ class _UserAccountState extends State<UserAccount> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10.0, left: 0.0), // Adjust these values as needed
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                        decoration: BoxDecoration(
-                          color: Color(0xFF2abca4),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.email,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width: 10.0),
-                            Text(
-                              '$email',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                letterSpacing: 0.5,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ],
-            )));
+            ),
+          ),
+          Positioned(
+            bottom: 20.0,
+            left: 20.0,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+              decoration: BoxDecoration(
+                color: Color(0xFF2abca4),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.email,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 10.0),
+                  Text(
+                    '$email',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      letterSpacing: 0.5,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
